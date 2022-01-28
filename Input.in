@@ -1,0 +1,36 @@
+#! Python Script for PSI4 optimize calculation
+#! You can also get time taken to completed the calculation and total memory used for this particular job
+#! Run the optimize using the following command on terminal: python psi4 -n2 Input.in -o Input.out
+#! This is import part
+import time
+import resource
+import re
+time_start = time.perf_counter()
+
+import psi4
+psi4.set_memory('10GB')
+
+c6h6 = psi4.geometry("""
+0 1
+C         0.6361497044   -1.2430950994    0.0000000320
+C        -0.6361501606    1.2430956597   -0.0000008937
+H         1.1308312922   -2.2103097567    0.0000000755
+H        -1.1308304855    2.2103108709   -0.0000011411
+C        -0.7583397526   -1.1723860666   -0.0000009434
+C         0.7583406739    1.1723862741    0.0000001967
+H        -1.3486443713   -2.0844039819   -0.0000012073
+H         1.3486430623    2.0844057236    0.0000004009
+C         1.3945230217   -0.0706506569    0.0000001688
+C        -1.3945226817    0.0706521894   -0.0000010251
+H         2.4795302657   -0.1256263721    0.0000008940
+H        -2.4795300584    0.1256261997   -0.0000016485
+units angstrom
+""")
+
+psi4.set_options ({
+        'freeze_core': 'True'})
+psi4.optimize('blyp/6-31g**')
+
+time_elapsed = (time.perf_counter() - time_start)
+memMb = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss/1024.0/1024.0
+print ("%5.1f secs %5.1f MByte" % (time_elapsed,memMb))
