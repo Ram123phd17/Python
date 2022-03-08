@@ -1,4 +1,4 @@
-# Input.in file: 
+# PSI4 Input.in Python File: 
 It can be used to perfrom the PSI4 optimization with python interface. We can also calculate total time taken to complete the jobs as well as memory
 
 # Python Notes 1: 
